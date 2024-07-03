@@ -1,5 +1,5 @@
 void main() {
-  // dart 자료형(int,double,String,bool 기타 등등)
+  // dart 자료형(int,double,String,bool 기타 등등!)
   // List 많이 사용하지 않는 이유는 var가 있어서 자료형을 컴파일러가 알아서 결정해준다.
   List<int> numbers = [1,2,3,4,5];
   List<String> strings = ['a','b','c'];
