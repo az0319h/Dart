@@ -1,0 +1,41 @@
+void main() {
+  // dart 자료형(int,double,String,bool 기타 등등)
+  // List 많이 사용하지 않는 이유는 var가 있어서 자료형을 컴파일러가 알아서 결정해준다.
+  List<int> numbers = [1,2,3,4,5];
+  List<String> strings = ['a','b','c'];
+  var temp = [1,2,3,4,5,'a','b'];
+  
+  // 특이한 기능! 밑에 문장에서 볼 수 있듯 배열에 if문을 추가할 수 있다.
+  var temp1 = [1,2,3,if(true) 4,];
+  print(temp1);
+  var oldFriends = ['nico','lynn'];
+  var newFriends = ['lewis','ralph','darren',for(var friend in oldFriends) "💩 $friend",];
+  print(newFriends);
+  
+  // $기호사용
+  var name = "sunghoon";
+  var desc = "Hello everyone my name is $name, nice to meet you! oh my age is ${2024 - 24 + 1}Y";
+  print(desc);
+  
+  //Map
+  var player = {
+    'name' : "hoon",
+    'xp' : 100,
+    "SuperPower" : false
+  };
+  print(player);
+  print(player['name']);
+  
+  Map<String, bool> players = {
+      "sunghoon" : true,
+      "sunghoon1" : true,
+      "sunghoon2" : true,
+  };
+  print(players);
+  
+  Map<List<int>, bool> listplayers = {
+      [1,2,3,4,5] : true,
+      [5,4,3,2,1] : false,
+  };
+  print(listplayers);
+ }
