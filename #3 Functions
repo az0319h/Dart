@@ -1,34 +1,102 @@
 // #3 Functions
 
 // #3.0 Defining a Function
-String sayHello1(var name){
+String sayHello1(var name) {
   print("hello $name nice to meet you");
   return name + "😇";
 }
 
-String sayHello2(var name) => name + "💩"; //반환하는 코드를 작성하는 경우 이렇게 간결하게 쓸 수 있다. return 단어 생략
+String sayHello2(var name, int age) =>
+    "$name, $age 💩"; //반환하는 코드를 작성하는 경우 이렇게 간결하게 쓸 수 있다. return 단어 생략
 
 // #3.1 Named Parameters
 String sayHello3(String name, int age, String country) {
   return "Hello $name, you are $age, and you come for $country";
 }
-String sayHello4({String name = 'sunghoon', int age = 1, String country = '..'}) { //위의 방법을 개선
+
+String sayHello4(
+    {String name = 'sunghoon', int age = 1, String country = '..'}) {
+  //위의 방법을 개선
   // 매개 변수를 초기화 하지 않는다면 함수가 작동하지 않는다. 이유는 함수를 호출할 때 사용자가 값을 넣지 않을 경우를 대비한다.
   return "Hello $name, you are $age, and you come for $country";
 }
-String sayHello5({required String name, required int age, required String country}) { //위의 방법을 개선
+
+String sayHello5(
+    {required String name, required int age, required String country}) {
+  //위의 방법을 개선
   // 만약 main에서 사용자가 매개변수를 넣지 않고 함수를 호출하는 경우 반드시 매개변수를 넣어야 함수가 호출될 수 있도록 수정
   return "Hello $name, you are $age, and you come for $country";
 }
+
+// #3.2 Recap(#3.1에서 배운 내용을 복습한다.)
+// #3.3 Optional Positional Parameters
+String sayHello7(String name, int age, [String? country = ".."]) =>
+    "$name, $age, $country";
+
+// #3.4 QQ(question question) Operator
+String toUpperCaseName(String? name) =>
+    name != null ? name.toUpperCase() : "ANON!";
+String toUpperCaseName1(String? name) =>
+    name?.toUpperCase() ??
+    "ANON!"; // 위 코드를 좀 더 간결하게 만약 ??를 기준으로 좌향이 null이면 우향을 return한다.
+
+// #3.5 Typedef(alias기능을 제공)
+typedef ListOfInts = List<int>;// List<int>라는 자료형에 특정 별명을 만들어서 사용할 수 있는 기능
+typedef UserInfo = Map<String, String>; // Map<String, String>라는 자료형에 특정 별명을 만들어서 사용!
+List<int> reverseNumberLists(List<int> list) {
+  var reversed = list.reversed;
+  return reversed.toList(); //List자료형으로 변환해서 반환
+}
+ListOfInts reverseNumberLists1(ListOfInts list) {
+  var reversed = list.reversed;
+  return reversed.toList(); //List자료형으로 변환해서 반환
+}
+String sayHi(Map<String, String> userinfo){
+  return "Hi ${userinfo['name']}";
+}
+String sayHi1(UserInfo userinfo){
+  return "Hi ${userinfo['name']}";
+}
+
 // main
 void main() {
   // #3.0 Defining a Function
   print(sayHello1("nico"));
-  print(sayHello2('nico'));
+  print(sayHello2('nico', 20));
+
   // #3.1 Named Parameters
-  print(sayHello3('nico',24,'korea'));
-  print(sayHello4(age : 20, country : "china", name : "nico"));
+  print(sayHello3('nico', 24, 'korea'));
+  print(sayHello4(age: 20, country: "china", name: "nico"));
   print(sayHello4()); // default 매개변수들로 초기화해서 반환!
   //print(sayHello5()); // 매개변수를 넣지 않는다면 함수가 호출되지 않도록 함수를 수정함
-  print(sayHello5(name : "nico", age : 100, country : "japan"));
+  print(sayHello5(name: "nico", age: 100, country: "japan"));
+
+  // #3.3 Optional Positional Parameters
+  print(sayHello7('nico',
+      100)); // country를 입력하지 않아도 함수가 동작한다. 이유는 해당 함수에 String? 처리를 통해 null일 수 있다는 사실을 알려주었기 때문이다. 그리고 default value를 부여해서 인자를 전달하지 않아도 함수가 동작하도록 설계
+
+  // #3.4 QQ(question question) Operator
+  print(toUpperCaseName(
+      null)); // 해당 함수가 null을 인자로 받을 수 있도록 함수를 만들었고 혹시 null이 인자도 전달되면 단어가 없기 때문에 toUpperCase를 사용할 수 없다. 따라서 삼항 연산자를 사용하여 null일 경우에 null을 알려주는 단어를 반환한다.
+  print(toUpperCaseName('nico'));
+  print(toUpperCaseName1(null));
+  print(toUpperCaseName1('nico'));
+  String? name; //name = null이라면 밑에서 값을 할당해주면 된다.
+  name ??= 'nico';
+  name ??= 'hoon';
+  print(name); // hoon이 아닌 nico가 출력됨. 이유는 name이미 nico라는 값을 초기화했기 때문이다.
+  name = null;
+  name ??= 'hoon';
+  print(name); // 이제는 nico가 아닌 hoon이 출력된다.
+
+  // #3.5 Typedef
+  var reverse_number_lists = reverseNumberLists([1,2,3,4,5]);
+  print(reverse_number_lists);
+  reverse_number_lists = reverseNumberLists1([1,2,3,4,5]); //alias를 적용한 함수
+  print(reverse_number_lists);
+  
+  var sayhi = sayHi({"name":"nico"}); //alias가 아닌 함수
+  var sayhi1 = sayHi1({"name":"nico"}); // alias로 지정된 함수 위 함수와 동일한 결과 출력
+  print("$sayhi and $sayhi1"); // 동일한 결과 출력
+  
 }
